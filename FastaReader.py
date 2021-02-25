@@ -11,6 +11,7 @@ class FastaReader:
         self._f.close()
 
     def getSequence(self, sequenceName):
+        self._f.seek(0)
         while True:
             line = self._f.readline()
             if not line:
