@@ -3,6 +3,43 @@ from BgzfReader import BgzfReader
 import struct
 import sys
 
+class BamAlignment:
+    _name = None
+    _refId = None
+    _seq = None
+    _cigar = None
+    _qual = None
+
+    def setName(self, name):
+        self._name = name
+
+    def getName(self):
+        return self._name
+
+    def setRefId(self, refId):
+        self._refId = refId
+
+    def getRefId(self):
+        return self._refId
+
+    def setSeq(self, seq):
+        self._seq = seq
+
+    def getSeq(self):
+        return self._seq
+
+    def setCigar(self, cigar):
+        self._cigar = cigar
+
+    def getCigar(self):
+        return self._cigar
+
+    def setQual(self, qual):
+        self._qual = qual
+
+    def getQual(self):
+        return self._qual
+
 
 class BamReader:
     _reader = None
@@ -106,4 +143,12 @@ class BamReader:
             qual.append(struct.unpack_from("<b", block, p)[0])
             i += 1
             p += 1
+
+        align = BamAlignment()
+        align.setName(readName)
+        align.setRefId(refId)
+        align.setSeq(seq)
+        align.setCigar(cigar)
+        align.setQual(qual)
+        return align
 
