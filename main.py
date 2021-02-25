@@ -13,7 +13,6 @@ class SequenceAlignment:
     _ins = None
     _del = None
     _sequence = None
-    _nreads = None
     _quality = None
     _quality_mean = None
 
@@ -25,7 +24,6 @@ class SequenceAlignment:
         self._ins = [0] * length
         self._del = [0] * length
         self._sequence = sequence
-        self._nreads = 0
         self._quality = list()
         self._qualitySum = [0] * length
         for _ in range(length):
@@ -35,7 +33,6 @@ class SequenceAlignment:
         if (flag & 0x04 or flag & 0x10 or flag & 0x100 or flag & 0x200
             or flag & 0x400 or flag & 0x800):
             return False
-        self._nreads += 1
         refI = pos # indice on the reference
         alnI = 0   # indice on seq
         aa = 0
