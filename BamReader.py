@@ -6,6 +6,7 @@ import sys
 class BamAlignment:
     _name = None
     _refId = None
+    _pos = None
     _seq = None
     _cigar = None
     _qual = None
@@ -21,6 +22,12 @@ class BamAlignment:
 
     def getRefId(self):
         return self._refId
+
+    def setPos(self, pos):
+        self._pos = pos
+
+    def getPos(self):
+        return self._pos
 
     def setSeq(self, seq):
         self._seq = seq
@@ -77,6 +84,8 @@ class BamReader:
 
     def getNextAlignment(self):
         blockSize = self._reader.read(4)
+        if blockSize == 0:
+            return None
         if len(blockSize) != 4:
             raise Exception("[Error] file {} badly formatted. Unable to read "
                             "next alignment".format(filename))
@@ -147,6 +156,7 @@ class BamReader:
         align = BamAlignment()
         align.setName(readName)
         align.setRefId(refId)
+        align.setPos(pos)
         align.setSeq(seq)
         align.setCigar(cigar)
         align.setQual(qual)
