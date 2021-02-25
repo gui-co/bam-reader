@@ -10,6 +10,7 @@ class BamAlignment:
     _seq = None
     _cigar = None
     _qual = None
+    _flag = None
 
     def setName(self, name):
         self._name = name
@@ -46,6 +47,12 @@ class BamAlignment:
 
     def getQual(self):
         return self._qual
+
+    def setFlag(self, flag):
+        self._flag = flag
+
+    def getFlag(self):
+        return self._flag
 
 
 class BamReader:
@@ -165,5 +172,6 @@ class BamReader:
         align.setSeq(seq)
         align.setCigar(cigar)
         align.setQual(qual)
+        align.setFlag(flag)
         return align
 
