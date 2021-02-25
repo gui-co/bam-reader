@@ -82,6 +82,11 @@ class BamReader:
             return self._sequenceNames[i]
         return None
 
+    def getSequenceLength(self, i):
+        if i < len(self._sequenceLengths):
+            return self._sequenceLengths[i]
+        return 0
+
     def getNextAlignment(self):
         blockSize = self._reader.read(4)
         if blockSize == 0:
