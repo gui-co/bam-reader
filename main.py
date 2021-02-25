@@ -34,7 +34,7 @@ class SequenceAlignment:
     def setAlignment(self, cigar, qual, pos, seq, flag):
         if (flag & 0x04 or flag & 0x10 or flag & 0x100 or flag & 0x200
             or flag & 0x400 or flag & 0x800):
-            return
+            return False
         self._nreads += 1
         refI = pos # indice on the reference
         alnI = 0   # indice on seq
@@ -88,6 +88,7 @@ class SequenceAlignment:
                     refI += 1
                     alnI += 1
             aa += 1
+        return True
 
     def write(self):
         t1 = time.clock_gettime(time.CLOCK_MONOTONIC)
@@ -169,12 +170,13 @@ while True:
         seqAlign = SequenceAlignment(sequenceName, sequence)
         nReads = 0
 
-    nReads += 1
+    done = seqAlign.setAlignment(align.getCigar(),
+                                 align.getQual(),
+                                 align.getPos(),
+                                 align.getSeq(),
+                                 align.getFlag())
+    if done:
+        nReads += 1
     if nReads % 100 == 0:
         print("    Add read {}".format(nReads))
-    seqAlign.setAlignment(align.getCigar(),
-                          align.getQual(),
-                          align.getPos(),
-                          align.getSeq(),
-                          align.getFlag())
 
